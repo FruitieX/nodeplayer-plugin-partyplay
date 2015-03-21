@@ -20,10 +20,10 @@ exports.init = function(_player, _logger, callback) {
 
     if (!player.plugins['express']) {
         callback('module must be initialized after express module!');
-    } else if (!player.plugins.['socketio']) {
+    } else if (!player.plugins['socketio']) {
         // partyplay client depends on socketio module
         callback('module must be initialized after socketio module!');
-    } else if (!player.plugins.['rest']) {
+    } else if (!player.plugins['rest']) {
         // partyplay client depends on rest module
         callback('module must be initialized after rest module!');
     } else {
