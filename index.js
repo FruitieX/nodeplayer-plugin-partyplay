@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var _ = require('underscore');
 
-var nodeplayerConfig = require('nodeplayer-config');
+var nodeplayerConfig = require('nodeplayer').config;
 var coreConfig = nodeplayerConfig.getConfig();
 var defaultConfig = require('./default-config.js');
 var config = nodeplayerConfig.getConfig(MODULE_NAME, defaultConfig);
