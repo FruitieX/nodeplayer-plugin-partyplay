@@ -1,6 +1,6 @@
 {
   "name": "nodeplayer-plugin-partyplay",
-  "version": "0.1.99",
+  "version": "0.1.998",
   "description": "web-based party playlist manager for nodeplayer",
   "main": "index.js",
   "scripts": {
