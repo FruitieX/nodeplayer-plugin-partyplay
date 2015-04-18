@@ -33,7 +33,7 @@ exports.init = function(_player, _logger, callback) {
             player.app.use('/', express.static(__dirname + '/client'));
         }
 
-        player.app.post('/vote', bodyParser.json(), function(req, res) {
+        player.app.post('/api/partyplay/vote', bodyParser.json(), function(req, res) {
             var userID = req.body.userID;
             var vote = req.body.vote;
             var pos = req.body.pos;
@@ -60,6 +60,11 @@ exports.init = function(_player, _logger, callback) {
             logger.info('got vote ' + vote + ' for song: ' + song.songID);
 
             res.send('success');
+        });
+        player.app.post('/api/partyplay/append', function(req, res) {
+            var err = player.addToQueue([req.body.song]);
+            // TODO: error handling
+            res.send(err);
         });
 
         callback();
@@ -144,9 +149,11 @@ exports.sortQueue = function() {
         if (aVotes !== bVotes) {
             // ordering first determined by votes + oldness
             return (bVotes - aVotes);
-        } else {
+        } else if (a.timeAdded !== b.timeAdded) {
             // if votes equal, prioritize song that has waited longer
             return a.timeAdded - b.timeAdded;
+        } else {
+            return a.songID < b.songID;
         }
     });
     if (np) {
@@ -183,7 +190,9 @@ var voteSong = function(song, vote, userID) {
         }
 
         _.each(player.queue, function(queueSong) {
-            delete(queueSong.downVotes[userID]);
+            if (queueSong.downVotes) {
+                delete(queueSong.downVotes[userID]);
+            }
         });
 
         if (np) {

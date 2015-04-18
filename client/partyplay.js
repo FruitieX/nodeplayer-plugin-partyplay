@@ -5,6 +5,12 @@ var progress = {started: 0, interval: null};
 
 var socket;
 
+var searchRemove = function() {
+    $('#search-results').empty();
+    $('#search-results-text').addClass('hidden');
+    $('#search-remove').addClass('hidden');
+};
+
 var search = function() {
     var searchTerms = $('#search-terms').val();
     $('#search-button').prop('disabled', true);
@@ -22,6 +28,7 @@ var search = function() {
         searchResults = JSON.parse(data);
         $('#search-results').empty();
         $('#search-results-text').removeClass('hidden');
+        $('#search-remove').removeClass('hidden');
         $('#search-button').prop('disabled', false);
 
         // TODO: separate backends somehow
@@ -91,7 +98,7 @@ var vote = function(pos, vote) {
 
     $.ajax({
         type: 'POST',
-        url: '/vote',
+        url: '/api/partyplay/vote',
         data: JSON.stringify({
             vote: vote,
             userID: $.cookie('userID'),
@@ -107,15 +114,16 @@ var appendQueue = function(backendName, songID) {
     searchResults[backendName].songs[songID].userID = $.cookie('userID');
     $.ajax({
         type: 'POST',
-        url: '/queue',
+        url: '/api/partyplay/append',
         data: JSON.stringify({
-            songs: [searchResults[backendName].songs[songID]]
+            song: searchResults[backendName].songs[songID]
         }),
         contentType: 'application/json'
     });
 
     $('#search-results').empty();
     $('#search-results-text').addClass('hidden');
+    $('#search-remove').addClass('hidden');
 };
 
 var pad = function(number, length) {
@@ -296,7 +304,9 @@ $(document).ready(function() {
         });
 
         socket.on('playback', function(data) {
-            console.log(data);
+            if (!data) {
+                return;
+            }
             var currentProgress = (data.position || 0);
             progress.started = new Date() - currentProgress;
             progress.duration = data.duration;
