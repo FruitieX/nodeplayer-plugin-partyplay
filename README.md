@@ -9,7 +9,7 @@ Setup
 -----
 
 1. Enable the `partyplay` module after `express`, `socketio` and `rest` in `core.json`
-2. It is highly advicable to setup the `plugin-verifymac` module to prevent clients from
+2. It is highly advicable to setup the [plugin-verifymac](https://github.com/FruitieX/nodeplayer-plugin-verifymac) module to prevent clients from
    tampering with song data
 3. Partyplay can be accessed from `http(s)://yourdomain/partyplay` or if you're using `setAsRoot`
    in the `plugin-partyplay.json` config file: `http(s)://yourdomain`
