@@ -1,6 +1,6 @@
 {
   "name": "nodeplayer-plugin-partyplay",
-  "version": "0.1.99999",
+  "version": "0.2.0",
   "description": "web-based party playlist manager for nodeplayer",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/FruitieX/nodeplayer-plugin-partyplay",
   "dependencies": {
-    "body-parser": "^1.12.2",
     "express": "^4.12.3",
     "nodeplayer": "*",
     "underscore": "^1.8.2"

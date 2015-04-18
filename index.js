@@ -2,7 +2,6 @@
 
 var MODULE_NAME = 'plugin-partyplay';
 
-var bodyParser = require('body-parser');
 var express = require('express');
 var _ = require('underscore');
 
@@ -33,7 +32,7 @@ exports.init = function(_player, _logger, callback) {
             player.app.use('/', express.static(__dirname + '/client'));
         }
 
-        player.app.post('/api/partyplay/vote', bodyParser.json(), function(req, res) {
+        player.app.post('/api/partyplay/vote', function(req, res) {
             var userID = req.body.userID;
             var vote = req.body.vote;
             var pos = req.body.pos;
